@@ -14,6 +14,31 @@
 @media(max-width:700px){.insight-visual-grid{grid-template-columns:1fr}.ai-summary-grid,.result-chart-grid{grid-template-columns:1fr}.chart-row{grid-template-columns:88px minmax(0,1fr) 45px}.economics-waterfall{gap:6px}}
 .ai-summary-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:12px}.ai-summary-card{border:1px solid var(--line);background:#fff;border-radius:12px;padding:15px;min-width:0}.ai-summary-card h4{margin:0 0 8px;font-size:13px}.ai-summary-card p,.ai-summary-card li{font-size:12px;line-height:1.6;color:#536176;margin:0}.ai-summary-card ul{margin:0;padding-left:18px}.strategy-flow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px}.strategy-flow-step{border:1px solid var(--line);border-radius:12px;padding:15px;background:#fff;position:relative}.strategy-flow-step .step-icon{width:34px;height:34px;border-radius:10px;background:#eaf1ff;color:#2553bf;display:grid;place-items:center;font-size:18px;margin-bottom:10px}.strategy-flow-step strong{display:block;font-size:12px;margin-bottom:5px}.strategy-flow-step p{font-size:11px;color:var(--muted);margin:0;line-height:1.5}.strategy-visual-two{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}.strategy-visual-panel{border:1px solid var(--line);border-radius:12px;padding:15px;background:#fff}.strategy-visual-panel h4{font-size:12px;margin:0 0 10px}.strategy-metric-row{display:flex;gap:8px;align-items:center;margin:10px 0;font-size:11px}.strategy-metric-row .metric-label{width:100px;color:#536176}.strategy-metric-row .metric-track{height:9px;border-radius:99px;background:#edf0f5;flex:1;overflow:hidden}.strategy-metric-row .metric-fill{height:100%;border-radius:99px;background:#4778ef}.strategy-metric-row strong{font-size:11px;min-width:55px;text-align:right}.strategy-risk{border:1px solid #f0dfb6;background:#fffaf0;border-radius:12px;padding:14px;margin-top:12px;color:#6c5524;font-size:12px}.strategy-risk strong{display:block;margin-bottom:4px}.text-summary{margin-top:12px}.text-summary .ai-summary-card{margin-bottom:10px}.text-summary .ai-summary-card:last-child{margin-bottom:0}@media(max-width:700px){.ai-summary-grid,.strategy-flow,.strategy-visual-two{grid-template-columns:1fr}}
 @media(max-width:900px){.screen#screen-setup .grid2{grid-template-rows:none;grid-auto-flow:row}.layout{grid-template-columns:1fr}.sidebar{display:none}.main{padding:22px 16px 45px}.topbar{padding:0 16px}.stepper{grid-template-columns:1fr 1fr}.grid2,.insightrow{grid-template-columns:1fr}.grid3,.choicegrid{grid-template-columns:1fr}.heading{flex-direction:column}.recgrid,.recommendation-list{grid-template-columns:1fr}}@media(max-width:540px){.visual-kpis{grid-template-columns:1fr}.visual-score{grid-template-columns:92px minmax(0,1fr) 30px;gap:7px}.view-toggle button{padding:8px 10px}.step{padding:9px;font-size:10px}.step .num{width:20px;height:20px}.panelhead,.panelbody{padding-left:16px;padding-right:16px}.inputrow{grid-template-columns:1fr}.topright .mode-label{display:none}}
+
+/* Stronger visual experiment map */
+.experiment-map{margin-top:14px;border:1px solid #dce5f5;border-radius:14px;background:linear-gradient(180deg,#fbfcff,#fff);padding:18px}
+.experiment-map-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+.experiment-map-head h4{margin:0;font-size:13px}
+.experiment-map-head span{font-size:10px;color:#64748b}
+.experiment-stage{display:grid;grid-template-columns:1fr 38px 1.15fr 38px 1fr;gap:8px;align-items:stretch}
+.experiment-node{border:1px solid #dce4f1;border-radius:12px;background:#fff;padding:14px;min-width:0}
+.experiment-node.primary{border-color:#b9ccff;background:#f5f8ff}
+.experiment-node .node-icon{width:36px;height:36px;display:grid;place-items:center;border-radius:11px;background:#e7efff;color:#2858c7;font-size:20px;margin-bottom:10px}
+.experiment-node strong{display:block;font-size:12px;margin-bottom:6px}
+.experiment-node p{font-size:11px;color:#5e6c81;line-height:1.5;margin:0;overflow-wrap:anywhere}
+.experiment-arrow{display:grid;place-items:center;color:#6d8ce0;font-size:23px;font-weight:700}
+.experiment-split{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.experiment-arm{border-radius:9px;padding:10px;border:1px solid #dce4f1;background:#fff}
+.experiment-arm.test{background:#edf4ff;border-color:#c9d9ff}
+.experiment-arm strong{font-size:11px;display:block;margin-bottom:4px}
+.experiment-arm span{font-size:10px;color:#64748b;line-height:1.4;display:block}
+.metric-strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px}
+.metric-chip{border:1px solid #e0e6ef;border-radius:11px;padding:12px;background:#fff;min-width:0}
+.metric-chip .metric-symbol{font-size:17px;color:#3567dc;margin-bottom:5px}
+.metric-chip strong{display:block;font-size:11px;margin-bottom:4px}
+.metric-chip span{font-size:10px;color:#68768a;line-height:1.4;display:block}
+@media(max-width:800px){.experiment-stage{grid-template-columns:1fr}.experiment-arrow{transform:rotate(90deg);height:22px}.metric-strip{grid-template-columns:1fr}.experiment-split{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -251,15 +276,26 @@ function renderStrategyVisuals(p,r){
  const threshold=val('threshold');
  const hasThreshold=/threshold/i.test(reward+' '+recommendation)||val('rewardType')==='Reward tied to a basket threshold';
  const thresholdLabel=threshold?`₹${escapeHtml(threshold)}`:'Merchant-defined threshold';
+ const durationLabel=escapeHtml(val('duration')||'14 days');
  return `<div class="visual-lead"><div class="kicker">Gemini strategy · visual experiment blueprint</div><h3>${escapeHtml(recommendation)}</h3><p>${escapeHtml(rationale)}</p><div class="visual-status"><span class="tag blue">Goal: ${escapeHtml(goalShort[p.goal])}</span><span class="tag green">Derived from Gemini response</span><span class="tag">Approval required</span></div></div>
- <div class="strategy-flow">
-  <div class="strategy-flow-step"><div class="step-icon">◎</div><strong>1. Who sees the offer?</strong><p>${escapeHtml(audience)}</p></div>
-  <div class="strategy-flow-step"><div class="step-icon">${hasThreshold?'₹':'✦'}</div><strong>2. What triggers the reward?</strong><p>${escapeHtml(reward)}${hasThreshold?`<br><strong style="margin-top:7px">${thresholdLabel}</strong>`:''}</p></div>
-  <div class="strategy-flow-step"><div class="step-icon">◷</div><strong>3. How is it tested?</strong><p>${escapeHtml((val('duration')||'14 days')+' test')}. ${escapeHtml(duration)}</p></div>
+ <div class="experiment-map">
+  <div class="experiment-map-head"><h4>How the experiment works</h4><span>${durationLabel} · review before launch</span></div>
+  <div class="experiment-stage">
+   <div class="experiment-node"><div class="node-icon">◎</div><strong>1. Identify eligible shoppers</strong><p>${escapeHtml(audience)}</p></div>
+   <div class="experiment-arrow">→</div>
+   <div class="experiment-node primary"><div class="node-icon">${hasThreshold?'₹':'✦'}</div><strong>2. Show the reward</strong><p>${escapeHtml(reward)}</p>${hasThreshold?`<div style="font-size:22px;font-weight:800;color:#2858c7;margin-top:10px">${thresholdLabel}</div><p>Basket threshold</p>`:''}</div>
+   <div class="experiment-arrow">→</div>
+   <div class="experiment-node"><div class="node-icon">⇄</div><strong>3. Compare outcomes</strong><p>${escapeHtml(duration)}</p><div class="experiment-split"><div class="experiment-arm test"><strong>Test group</strong><span>Sees the reward</span></div><div class="experiment-arm"><strong>Control group</strong><span>Usual checkout experience</span></div></div></div>
+  </div>
+  <div class="metric-strip">
+   <div class="metric-chip"><div class="metric-symbol">↗</div><strong>Primary success metric</strong><span>${escapeHtml(goalMetric[p.goal])}</span></div>
+   <div class="metric-chip"><div class="metric-symbol">◷</div><strong>Guardrail metric</strong><span>Checkout conversion and contribution per order</span></div>
+   <div class="metric-chip"><div class="metric-symbol">✓</div><strong>Decision rule</strong><span>Compare against baseline/control before deciding whether to scale</span></div>
+  </div>
  </div>
- <div class="strategy-visual-two"><div class="strategy-visual-panel"><h4>Success metric</h4><strong style="font-size:16px">${escapeHtml(goalMetric[p.goal])}</strong><p style="font-size:11px;color:var(--muted);margin:7px 0 0">${escapeHtml(metrics)}</p></div><div class="strategy-visual-panel"><h4>Why this strategy fits</h4><p style="font-size:12px;color:#536176;margin:0;line-height:1.6">${escapeHtml(rationale)}</p></div></div>
+ <div class="strategy-visual-two"><div class="strategy-visual-panel"><h4>Why this strategy fits</h4><p style="font-size:12px;color:#536176;margin:0;line-height:1.6">${escapeHtml(rationale)}</p></div><div class="strategy-visual-panel"><h4>Launch checks</h4><div class="checklist"><div class="check">✓ <span>Confirm reward cost fits the merchant's margin.</span></div><div class="check">✓ <span>Confirm eligibility and redemption terms.</span></div><div class="check">✓ <span>Define a baseline/control and review the outcome.</span></div></div></div></div>
  <div class="strategy-risk"><strong>Risks and guardrails</strong>${escapeHtml(risk)}</div>
- <div class="notice" style="margin-top:12px"><strong>Experiment flow:</strong> Define eligible audience → show the conditional reward → compare the primary metric and guardrails against a baseline/control. Details shown here are extracted from Gemini's recommendation where available; missing details use the current merchant inputs.</div>`;
+ <div class="notice" style="margin-top:12px"><strong>Prototype boundary:</strong> This is a reviewable experiment plan only. It does not activate rewards or modify checkout. Strategy details are derived from Gemini's response where available, combined with the selected experiment settings.</div>`;
 }
 function setStrategyView(mode){
  const showText=mode==='text';
