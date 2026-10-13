@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout Rewards Intelligence | Prototype</title>
+<style>
+:root{--ink:#17212f;--muted:#687588;--line:#e5e9ef;--bg:#f5f7fa;--white:#fff;--blue:#2563eb;--blue2:#eaf1ff;--green:#147d54;--greenbg:#e9f8f0;--amber:#946200;--amberbg:#fff5d9;--shadow:0 8px 28px rgba(25,42,70,.06)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer}.app{min-height:100vh}.topbar{height:68px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 30px;position:sticky;top:0;z-index:5}.brand{display:flex;align-items:center;gap:11px;font-weight:750;letter-spacing:-.3px}.brandmark{width:34px;height:34px;background:#245eea;border-radius:10px;color:#fff;display:grid;place-items:center;font-weight:800;font-size:17px}.brand small{display:block;color:var(--muted);font-size:11px;font-weight:500;letter-spacing:0}.topright{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:12px}.avatar{width:32px;height:32px;border-radius:50%;background:#e9eefc;color:#3155a5;display:grid;place-items:center;font-weight:700}.layout{display:grid;grid-template-columns:224px minmax(0,1fr);max-width:1440px;margin:auto}.sidebar{padding:24px 14px;border-right:1px solid var(--line);min-height:calc(100vh - 68px);background:#fafbfd}.navlabel{padding:0 12px 10px;color:#99a2b1;text-transform:uppercase;font-size:10px;font-weight:750;letter-spacing:1px}.nav{display:flex;align-items:center;gap:11px;padding:11px 12px;border-radius:9px;color:#667387;margin:3px 0;font-weight:550}.nav.active{background:#eaf0ff;color:#214fc4}.nav.locked{opacity:.38;cursor:not-allowed;pointer-events:auto}.nav.locked .ico::after{content:" 🔒";font-size:10px}.step.locked{opacity:.42;background:#f7f8fa;color:#98a1af}.nav .ico{width:18px;text-align:center;font-size:16px}.side-note{margin:30px 7px 0;padding:13px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--muted);font-size:11px}.side-note strong{color:var(--ink);display:block;margin-bottom:5px}.main{padding:30px 34px 60px;max-width:1200px;width:100%;margin:0 auto}.eyebrow{color:var(--blue);text-transform:uppercase;letter-spacing:1.2px;font-size:10px;font-weight:800;margin-bottom:8px}.heading{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:24px}.heading h1{font-size:27px;letter-spacing:-.9px;margin:0 0 6px}.heading p{margin:0;color:var(--muted);max-width:650px}.tag{display:inline-flex;align-items:center;gap:6px;padding:5px 9px;border-radius:99px;background:#eef1f6;color:#59667a;font-size:10px;font-weight:750;white-space:nowrap}.tag.blue{background:var(--blue2);color:#2553bf}.tag.green{background:var(--greenbg);color:var(--green)}.tag.amber{background:var(--amberbg);color:var(--amber)}.stepper{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:22px}.step{display:flex;align-items:center;gap:9px;padding:12px 13px;border:1px solid var(--line);background:#fff;border-radius:11px;color:#8792a3;font-size:12px;font-weight:650}.step .num{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:#f0f2f6;font-size:11px}.step.active{border-color:#b8caff;background:#f5f8ff;color:#244eb3}.step.active .num{background:var(--blue);color:#fff}.step.done{color:var(--green)}.step.done .num{background:var(--greenbg);color:var(--green)}.panel{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);margin-bottom:18px;overflow:hidden}.panelhead{padding:21px 23px 0;display:flex;justify-content:space-between;gap:15px;align-items:flex-start}.panelhead h2{margin:0 0 4px;font-size:17px;letter-spacing:-.3px}.panelhead p{margin:0;color:var(--muted);font-size:12px}.panelbody{padding:21px 23px 24px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}.screen#screen-setup .grid2{grid-template-rows:repeat(3,auto);grid-auto-flow:column;row-gap:18px;align-items:stretch}.screen#screen-setup .grid2>div{display:contents}.screen#screen-setup .grid2 .field{margin-bottom:0;min-width:0}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.field{display:flex;flex-direction:column;gap:7px;margin-bottom:17px}.field:last-child{margin-bottom:0}.field label{font-size:12px;font-weight:700;color:#3c4859}.field .hint{font-size:11px;color:#8792a3;margin-top:-3px;min-height:16px}.field:not(:has(.hint))::after{content:"";display:block;height:16px;flex:0 0 16px}.field input,.field select,.field textarea{width:100%;border:1px solid #dce2ea;background:#fff;border-radius:9px;padding:11px 12px;outline:none;color:var(--ink)}.field input:focus,.field select:focus,.field textarea:focus{border-color:#80a2ff;box-shadow:0 0 0 3px #eaf0ff}.inputrow{display:grid;grid-template-columns:1fr 1fr;gap:12px}.choicegrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.choice{border:1px solid var(--line);border-radius:11px;padding:14px 13px;display:flex;gap:10px;align-items:flex-start;cursor:pointer;background:#fff;min-height:83px}.choice input{accent-color:var(--blue);margin-top:4px}.choice strong{display:block;font-size:12px;margin-bottom:3px}.choice span{display:block;color:var(--muted);font-size:11px;line-height:1.4}.choice:has(input:checked){border-color:#80a2ff;background:#f6f8ff}.subheading{font-size:12px;font-weight:800;margin:23px 0 12px}.subheading:first-child{margin-top:0}.divider{height:1px;background:var(--line);margin:20px 0}.btnrow{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:22px}.btn{border:1px solid #dbe1e9;background:#fff;color:#39465a;border-radius:9px;padding:10px 15px;font-weight:700;font-size:12px}.btn.primary{background:var(--blue);border-color:var(--blue);color:#fff;box-shadow:0 3px 8px #2563eb25}.btn.primary:hover{background:#1f53d5}.btn:disabled{opacity:.45;cursor:not-allowed}.btn.ghost{border-color:transparent;background:transparent}.btn.danger{color:#a83c3c}.small{font-size:11px;color:var(--muted)}.metric{border:1px solid var(--line);border-radius:12px;padding:15px}.metric .label{color:var(--muted);font-size:11px;margin-bottom:7px}.metric .value{font-size:22px;letter-spacing:-.5px;font-weight:800}.metric .note{font-size:10px;color:var(--muted);margin-top:4px}.insightrow{display:grid;grid-template-columns:1.2fr .8fr;gap:18px}.insight-card{border:1px solid var(--line);border-radius:13px;padding:16px;margin-bottom:10px}.insight-card:last-child{margin-bottom:0}.insight-card h3{margin:9px 0 6px;font-size:14px}.insight-card p{color:var(--muted);font-size:12px;margin:0 0 11px}.barline{display:flex;align-items:center;gap:10px;font-size:11px;margin:8px 0}.barline span:first-child{width:120px;color:#667387}.bar{height:7px;border-radius:20px;background:#edf0f5;flex:1;overflow:hidden}.bar i{height:100%;display:block;border-radius:20px;background:#6088f4}.barline strong{width:37px;text-align:right;font-size:11px}.notice{padding:12px 14px;border-radius:10px;background:#f4f7fb;color:#58677b;font-size:11px;border:1px solid #e8edf4}.notice strong{color:#293649}.ai-prose h4{font-size:13px;color:#17212f;margin:17px 0 6px}.ai-prose h4:first-child{margin-top:0}.ai-prose p{margin:8px 0;color:#536176}.ai-prose ul{margin:7px 0 12px;padding-left:20px}.ai-prose li{margin:4px 0;color:#536176}.recommendation{background:linear-gradient(135deg,#f5f8ff,#fff);border:1px solid #dce6ff;border-radius:14px;padding:19px}.recommendation h3{font-size:19px;letter-spacing:-.4px;margin:8px 0}.recommendation p{color:#536176;font-size:12px;margin:0}.recgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}.recitem{background:#fff;border:1px solid #e4eaf4;border-radius:10px;padding:12px}.recitem .k{font-size:10px;text-transform:uppercase;letter-spacing:.7px;color:#7d899b;font-weight:800}.recitem .v{font-size:12px;font-weight:700;margin-top:5px}.checklist{display:flex;flex-direction:column;gap:10px}.check{display:flex;gap:10px;align-items:flex-start;font-size:12px}.check input{accent-color:var(--blue);margin-top:3px}.statusline{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.dot{width:7px;height:7px;background:#20a36b;border-radius:50%}.empty{padding:45px 20px;text-align:center;color:var(--muted)}.empty .symbol{font-size:32px;margin-bottom:10px}.footer{display:flex;justify-content:space-between;align-items:center;color:#98a1af;font-size:10px;padding:8px 3px}.toast{position:fixed;right:24px;bottom:24px;background:#182334;color:#fff;padding:13px 17px;border-radius:11px;box-shadow:0 8px 30px #0002;z-index:20;font-size:12px;display:none;max-width:330px}.toast.show{display:block;animation:up .2s ease}@keyframes up{from{transform:translateY(8px);opacity:0}to{transform:translateY(0);opacity:1}}.screen{display:none}.screen.active{display:block}.sectionnav{display:flex;gap:7px;margin-bottom:18px}.sectionnav button{border:1px solid var(--line);background:#fff;border-radius:8px;padding:8px 11px;color:var(--muted);font-size:11px;font-weight:700}.sectionnav button.active{background:#eaf1ff;border-color:#cddaff;color:#2553bf}.recommendation-list{display:grid;grid-template-columns:1fr 1fr;gap:12px}.recommendation-list .insight-card{margin:0}.pillrow{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.pill{border:1px solid #dfe5ee;border-radius:99px;padding:5px 9px;color:#657186;font-size:10px}.pill.selected{background:#edf3ff;border-color:#c9d9ff;color:#2854b8}@media(max-width:900px){.screen#screen-setup .grid2{grid-template-rows:none;grid-auto-flow:row}.layout{grid-template-columns:1fr}.sidebar{display:none}.main{padding:22px 16px 45px}.topbar{padding:0 16px}.stepper{grid-template-columns:1fr 1fr}.grid2,.insightrow{grid-template-columns:1fr}.grid3,.choicegrid{grid-template-columns:1fr}.heading{flex-direction:column}.recgrid,.recommendation-list{grid-template-columns:1fr}}@media(max-width:540px){.step{padding:9px;font-size:10px}.step .num{width:20px;height:20px}.panelhead,.panelbody{padding-left:16px;padding-right:16px}.inputrow{grid-template-columns:1fr}.topright .mode-label{display:none}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="topbar">
+  <div class="brand"><div class="brandmark">R</div><div>razorpay <small>Checkout Rewards Intelligence</small></div></div>
+  <div class="topright"><span class="tag amber">Prototype · Synthetic data</span><span class="mode-label">Merchant workspace</span><div class="avatar">AM</div></div>
+</header>
+<div class="layout">
+<aside class="sidebar">
+  <div class="navlabel">Workspace</div>
+  <div class="nav active" data-goto="setup" tabindex="0"><span class="ico">▦</span> Rewards intelligence</div>
+  <div class="nav locked" data-goto="insights" aria-disabled="true" tabindex="-1"><span class="ico">◫</span> Explore insights</div>
+  <div class="nav locked" data-goto="strategy" aria-disabled="true" tabindex="-1"><span class="ico">✧</span> My strategy</div>
+  <div class="nav locked" data-goto="results" aria-disabled="true" tabindex="-1"><span class="ico">↗</span> Results & learning</div>
+  <div class="side-note"><strong>Built for merchant control</strong>Recommendations are suggestions, not automatic actions. Review every strategy before using it.</div>
+</aside>
+<main class="main">
+  <section class="heading">
+    <div><div class="eyebrow">Growth tools / Rewards intelligence</div><h1>Turn reward insights into growth</h1><p>Discover what may work for businesses like yours, build a strategy around your products, and learn from the results.</p></div>
+    <span class="tag blue">✦ AI-generated strategy · Merchant approval required</span>
+  </section>
+  <div class="stepper" id="stepper">
+    <div class="step active" data-step="0"><span class="num">1</span> Your business</div>
+    <div class="step" data-step="1"><span class="num">2</span> Explore insights</div>
+    <div class="step" data-step="2"><span class="num">3</span> Custom strategy</div>
+    <div class="step" data-step="3"><span class="num">4</span> Measure results</div>
+  </div>
+
+  <section class="screen active" id="screen-setup">
+    <div class="panel">
+      <div class="panelhead"><div><h2>Tell us about your business</h2><p>We use these details to find a more relevant comparison group and tailor recommendations.</p></div><span class="tag">Step 1 of 4</span></div>
+      <div class="panelbody">
+        <div class="grid2">
+          <div>
+            <div class="field"><label for="businessName">Business name</label><input id="businessName" value="" placeholder="Enter your business name" required></div>
+            <div class="field"><label for="industry">Industry</label><select id="industry" required><option value="" selected disabled>Select industry</option><option value="electronics">Electronics</option><option value="fashion">Fashion & apparel</option><option value="beauty">Beauty & personal care</option><option value="home">Home & lifestyle</option><option value="food">Food & beverage</option></select></div>
+            <div class="field"><label for="category">Product category</label><select id="category" required><option value="" selected disabled>Select product category</option><option value="accessories">Accessories & low-ticket products</option><option value="mid">Mid-range electronics</option><option value="premium">Premium / high-ticket electronics</option><option value="skincare">Skincare & replenishable products</option><option value="apparel">Apparel & accessories</option><option value="homegoods">Home goods</option></select><div class="hint">Category helps avoid misleading comparisons within a broad industry.</div></div>
+          </div>
+          <div>
+            <div class="field"><label for="orderValue">Typical order value</label><select id="orderValue" required><option value="" selected disabled>Select typical order value</option><option value="low">Under ₹1,000</option><option value="mid">₹1,000–₹5,000</option><option value="high">₹5,000–₹25,000</option><option value="premium">Above ₹25,000</option></select></div>
+            <div class="field"><label for="margin">Approximate gross margin</label><select id="margin" required><option value="" selected disabled>Select gross margin</option><option value="low">Below 15%</option><option value="mid">15–35%</option><option value="high">Above 35%</option><option value="unknown">Not sure</option></select><div class="hint">Used to flag strategies that may erode profitability.</div></div>
+            <div class="field"><label for="customerMix">Customer mix</label><select id="customerMix" required><option value="" selected disabled>Select customer mix</option><option value="new">Mostly first-time customers</option><option value="balanced">A mix of new and returning</option><option value="repeat">Mostly returning customers</option></select></div>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="subheading">What do you want to improve?</div>
+        <div class="choicegrid">
+          <label class="choice"><input type="radio" name="goal" value="aov" required><div><strong>Increase cart value</strong><span>Encourage customers to spend more per order.</span></div></label>
+          <label class="choice"><input type="radio" name="goal" value="conversion"><div><strong>Improve conversion</strong><span>Help more checkout visitors complete payment.</span></div></label>
+          <label class="choice"><input type="radio" name="goal" value="repeat"><div><strong>Increase repeat purchases</strong><span>Give customers a reason to come back.</span></div></label>
+        </div>
+        <div class="btnrow"><span class="small">You can change these inputs at any time.</span><button class="btn primary" id="toInsights">Find relevant insights →</button></div>
+      </div>
+    </div>
+    <div class="notice"><strong>Privacy note:</strong> Cohort benchmarks and experiment outcomes are synthetic. Gemini generates recommendations from the details you provide; no real merchant/customer database or live checkout is connected.</div>
+  </section>
+
+  <section class="screen" id="screen-insights">
+    <div class="panel">
+      <div class="panelhead"><div><h2>Insights matched to your goal</h2><p id="cohortText">Illustrative patterns from a synthetic comparison cohort.</p></div><span class="tag blue">Matched cohort</span></div>
+      <div class="panelbody">
+        <div class="grid3" id="metrics"></div>
+        <div class="divider"></div>
+        <div class="insightrow">
+          <div>
+            <div class="subheading">What the sample data suggests</div>
+            <div id="insightCards"></div>
+          </div>
+          <div>
+            <div class="subheading">Why this cohort?</div>
+            <div class="notice" id="cohortRationale"></div>
+            <div class="subheading">What this does — and doesn't — tell us</div>
+            <div class="notice"><strong>Useful signal, not a guarantee.</strong><br>These synthetic patterns illustrate how comparisons could work. They do not establish causation or predict your results. A real product would require an eligible cohort, sufficient sample size and validation.</div>
+          </div>
+        </div>
+        <div class="btnrow"><button class="btn" data-goto="setup">← Edit business details</button><button class="btn primary" id="toStrategy">Build my strategy →</button></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen" id="screen-strategy">
+    <div class="panel">
+      <div class="panelhead"><div><h2>Your tailored reward strategy</h2><p>Use benchmark signals as input, then adapt the idea to your products, customers and constraints.</p></div><span class="tag blue">AI-generated strategy</span></div>
+      <div class="panelbody">
+        <div class="recommendation" id="recommendation"></div>
+        <div class="divider"></div>
+        <div class="grid2">
+          <div>
+            <div class="subheading">Implementation plan</div>
+            <div class="field"><label for="target">Target audience</label><select id="target"><option>All eligible checkout customers</option><option>First-time customers</option><option>Returning customers</option><option>Customers near a basket threshold</option></select></div>
+            <div class="field"><label for="rewardType">Proposed reward approach</label><select id="rewardType"><option>Relevant partner reward</option><option>Reward tied to a basket threshold</option><option>Post-purchase reward</option><option>Limited-time checkout incentive</option></select></div>
+            <div class="field"><label for="threshold">Basket threshold (₹), if relevant</label><input id="threshold" type="number" min="0" value="1500"></div>
+            <div class="field"><label for="duration">Test duration</label><select id="duration"><option>7 days</option><option selected>14 days</option><option>28 days</option></select></div>
+          </div>
+          <div>
+            <div class="subheading">Guardrails before launch</div>
+            <div class="checklist">
+              <label class="check"><input type="checkbox" id="guardMargin" checked> <span>Check reward cost against gross margin and expected incremental value.</span></label>
+              <label class="check"><input type="checkbox" id="guardEligibility" checked> <span>Confirm reward availability, eligibility and redemption terms.</span></label>
+              <label class="check"><input type="checkbox" id="guardBaseline" checked> <span>Define a baseline or control group where feasible.</span></label>
+              <label class="check"><input type="checkbox" id="guardPrivacy" checked> <span>Use only authorised data and avoid exposing other merchants' identities.</span></label>
+            </div>
+            <div class="notice" style="margin-top:15px"><strong>Activation status:</strong> This prototype cannot activate a real reward or modify your checkout. It creates a reviewable implementation plan only.</div>
+          </div>
+        </div>
+        <div class="field"><label for="merchantNotes">What would you change? (optional)</label><textarea id="merchantNotes" rows="2" placeholder="e.g. Avoid discounts; protect margin; focus on returning customers..."></textarea></div>
+        <div class="btnrow"><button class="btn" data-goto="insights">← Back to insights</button><div style="display:flex;gap:9px;flex-wrap:wrap"><button class="btn danger" id="rejectStrategy">Reject suggestion</button><button class="btn primary" id="approveStrategy">Approve test plan →</button></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen" id="screen-results">
+    <div class="panel">
+      <div class="panelhead"><div><h2>Experiment results & learning</h2><p>See how a controlled test could close the loop from recommendation to outcome.</p></div><span class="tag amber">Simulated results</span></div>
+      <div class="panelbody" id="resultsBody"></div>
+    </div>
+    <div class="panel">
+      <div class="panelhead"><div><h2>What should happen next?</h2><p>The next recommendation should reflect the result and its uncertainty.</p></div></div>
+      <div class="panelbody">
+        <div id="learningText" class="notice"></div>
+        <div class="btnrow"><button class="btn" data-goto="strategy">← Review strategy</button><button class="btn primary" id="newExperiment">Start a new experiment →</button></div>
+      </div>
+    </div>
+  </section>
+  <div class="footer"><span>Checkout Rewards Intelligence · Concept prototype</span><span>Gemini AI connected · Synthetic merchant data · No live reward activation</span></div>
+</main>
+</div>
+<div class="toast" id="toast"></div>
+</div>
+<script>
+const state={screen:'setup',approved:false,rejected:false,completed:new Set(),goal:null,businessName:'',approvedPlan:null};
+const $=id=>document.getElementById(id);
+const goalNames={aov:'increase average order value',conversion:'improve checkout conversion',repeat:'increase repeat purchases'};
+const goalShort={aov:'Average order value',conversion:'Checkout conversion',repeat:'Repeat purchase rate'};
+const goalMetric={aov:'Average order value',conversion:'Checkout conversion rate',repeat:'Repeat purchase rate'};
+function val(id){return $(id).value}
+function profile(){const selectedGoal=document.querySelector('input[name="goal"]:checked');return {name:val('businessName').trim(),industry:val('industry'),category:val('category'),orderValue:val('orderValue'),margin:val('margin'),customerMix:val('customerMix'),goal:selectedGoal?selectedGoal.value:null}}
+function validateSetup(){const p=profile();const missing=[];if(!p.name)missing.push('business name');if(!p.industry)missing.push('industry');if(!p.category)missing.push('product category');if(!p.orderValue)missing.push('typical order value');if(!p.margin)missing.push('approximate gross margin');if(!p.customerMix)missing.push('customer mix');if(!p.goal)missing.push('business goal');if(missing.length){toast('Please complete: '+missing.join(', ')+'.');return false;}return true}
+function canVisit(screen){const idx={setup:0,insights:1,strategy:2,results:3}[screen];return idx===0||state.completed.has('setup')&&(idx===1||state.completed.has('insights')&&(idx===2||state.completed.has('strategy')&&state.completed.has('decision')))}
+function updateNavigation(){const order=['setup','insights','strategy','results'];document.querySelectorAll('.nav').forEach(n=>{const locked=!canVisit(n.dataset.goto);n.classList.toggle('locked',locked);n.setAttribute('aria-disabled',String(locked));n.tabIndex=locked?-1:0;});document.querySelectorAll('.step').forEach((el,i)=>el.classList.toggle('locked',!canVisit(order[i])))}
+function moneyBand(p){return {'low':'under ₹1,000','mid':'₹1,000–₹5,000','high':'₹5,000–₹25,000','premium':'above ₹25,000'}[p.orderValue]}
+function industryName(p){return {electronics:'electronics',fashion:'fashion and apparel',beauty:'beauty and personal care',home:'home and lifestyle',food:'food and beverage'}[p.industry]}
+function categoryName(p){return {accessories:'accessories and low-ticket products',mid:'mid-range electronics',premium:'premium / high-ticket electronics',skincare:'skincare and replenishable products',apparel:'apparel and accessories',homegoods:'home goods'}[p.category]}
+function buildInsights(p){
+ let rec;
+ if(p.goal==='aov'){
+   if(p.orderValue==='low'||p.category==='accessories') rec={headline:'Test a relevant reward around a modest basket threshold',why:'Low-ticket accessory shoppers may respond to a clear reason to add one more item. A threshold should feel attainable relative to the usual basket.',approach:'Reward tied to a basket threshold',metric:'Average order value',risk:'Do not set the threshold so high that it discourages checkout completion.',bars:[['Threshold reward',68],['Broad discount',52],['Post-purchase reward',39]]};
+   else if(p.orderValue==='premium'||p.orderValue==='high'||p.category==='premium') rec={headline:'Test a relevant partner reward before discounting the product',why:'For higher-ticket products, preserving margin may matter more than a broad price reduction. A relevant reward can be tested without assuming it will lift basket value.',approach:'Relevant partner reward',metric:'Average order value and gross margin',risk:'High-ticket purchases are less frequent; allow enough time and avoid overinterpreting small samples.',bars:[['Partner reward',62],['Threshold reward',49],['Broad discount',36]]};
+   else rec={headline:'Test a basket-threshold reward against a relevant partner reward',why:'A mid-range basket can offer room to encourage add-ons, but the threshold and reward should fit product economics.',approach:'Reward tied to a basket threshold',metric:'Average order value',risk:'Track contribution margin as well as order value.',bars:[['Threshold reward',65],['Partner reward',58],['Broad discount',44]]};
+ } else if(p.goal==='conversion'){
+   rec={headline:'Test a simple, relevant checkout reward with clear eligibility',why:'Checkout visitors need to understand the reward and its conditions quickly. Avoid adding friction or making the offer feel complicated.',approach:'Relevant partner reward',metric:'Checkout conversion rate',risk:'Check that reward messaging does not distract from payment or create confusing terms.',bars:[['Simple partner reward',64],['Limited-time incentive',55],['Complex tiered offer',31]]};
+ } else {
+   if(p.category==='skincare'||p.industry==='beauty') rec={headline:'Test a return-visit reward aligned to the replenishment cycle',why:'Products that customers replenish can support a timely reason to return. The test window should reflect the natural time between purchases.',approach:'Post-purchase reward',metric:'Repeat purchase rate within a defined window',risk:'Do not judge repeat behaviour before a meaningful repurchase window has passed.',bars:[['Timed return reward',70],['Partner reward',55],['Immediate discount',42]]};
+   else if(p.orderValue==='premium'||p.orderValue==='high') rec={headline:'Test a relevant post-purchase reward instead of frequent discounts',why:'Higher-value purchases may happen infrequently. A useful post-purchase benefit may be worth testing without training customers to expect price cuts.',approach:'Post-purchase reward',metric:'Repeat purchase rate over a longer window',risk:'Use a longer measurement window and interpret small cohorts cautiously.',bars:[['Post-purchase reward',63],['Partner reward',57],['Immediate discount',34]]};
+   else rec={headline:'Test a relevant reward that gives customers a reason to return',why:'A relevant partner or post-purchase reward can be tested with returning-customer cohorts, while monitoring whether the behaviour is incremental.',approach:'Post-purchase reward',metric:'Repeat purchase rate',risk:'Compare against a baseline; returning customers may have purchased again anyway.',bars:[['Post-purchase reward',66],['Partner reward',59],['Immediate discount',45]]};
+ }
+ return rec;
+}
+function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000)}
+function go(screen){
+ if(!canVisit(screen)){toast('Complete the previous step before opening this page.');return;}
+ state.screen=screen;
+ document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('active',s.id==='screen-'+screen));
+ const order=['setup','insights','strategy','results'];const i=order.indexOf(screen);
+ document.querySelectorAll('.step').forEach((s,n)=>{s.classList.toggle('active',n===i);s.classList.toggle('done',n<i);s.querySelector('.num').textContent=n<i?'✓':String(n+1)});
+ document.querySelectorAll('.nav').forEach(n=>n.classList.toggle('active',n.dataset.goto===screen||(screen==='setup'&&n.dataset.goto==='setup')));updateNavigation();
+ window.scrollTo({top:0,behavior:'smooth'});
+}
+function refreshInsights(){
+ const p=profile(),r=buildInsights(p);state.profile=p;state.rec=r;
+ $('cohortText').textContent=`Synthetic ${industryName(p)} cohort · ${categoryName(p)} · typical order value ${moneyBand(p)} · goal: ${goalNames[p.goal]}.`;
+ const m=p.goal==='aov'?[['Matched sample cohort','126','fictional comparable merchants'],['Reward type with strongest signal',r.bars[0][0],'illustrative pattern only'],['Primary success metric','↑','track against baseline']]:p.goal==='conversion'?[['Matched sample cohort','143','fictional comparable merchants'],['Reward type with strongest signal',r.bars[0][0],'illustrative pattern only'],['Primary success metric','↑','track checkout completion']]:[['Matched sample cohort','98','fictional comparable merchants'],['Reward type with strongest signal',r.bars[0][0],'illustrative pattern only'],['Primary success metric','↑','track returning customers']];
+ $('metrics').innerHTML=m.map(x=>`<div class="metric"><div class="label">${x[0]}</div><div class="value" style="${x[1].length>7?'font-size:16px;line-height:1.3':''}">${x[1]}</div><div class="note">${x[2]}</div></div>`).join('');
+ $('insightCards').innerHTML=`<div class="insight-card"><span class="tag blue">Illustrative pattern</span><h3>${r.headline}</h3><p>${r.why}</p>${r.bars.map(b=>`<div class="barline"><span>${b[0]}</span><div class="bar"><i style="width:${b[1]}%"></i></div><strong>${b[1]}</strong></div>`).join('')}<div class="small" style="margin-top:10px">Relative scores are fictional examples, not measured uplift or market benchmarks.</div></div><div class="insight-card"><span class="tag">Watch-out</span><h3>${r.risk}</h3><p>Use the insight to form a testable hypothesis, not as proof that a reward caused the outcome.</p></div>`;
+ $('cohortRationale').innerHTML=`The comparison prioritises <strong>${industryName(p)}</strong>, <strong>${categoryName(p)}</strong> and a typical order value of <strong>${moneyBand(p)}</strong>. It also considers your selected goal and customer mix (${p.customerMix==='new'?'mostly first-time':p.customerMix==='repeat'?'mostly returning':'mixed'} customers).<br><br>A production version would only show a cohort if it met minimum-size and privacy requirements.`;
+ $('target').value=p.goal==='repeat'?(p.customerMix==='new'?'First-time customers':'Returning customers'):p.goal==='aov'?'Customers near a basket threshold':'All eligible checkout customers';
+ $('rewardType').value=r.approach;
+ // Only suggest a threshold for a basket-threshold reward.
+ $('threshold').value=r.approach==='Reward tied to a basket threshold'?(p.orderValue==='low'?750:p.orderValue==='mid'?1500:p.orderValue==='high'?7000:25000):'';
+ renderRecommendation();
+}
+function renderRecommendation(){
+ const p=state.profile||profile(),r=state.rec||buildInsights(p);
+ const previousAI=$('aiStrategy')?.innerHTML;
+ $('recommendation').innerHTML=`<div class="statusline"><span class="tag blue">Tailored for ${escapeHtml(p.name)}</span><span class="tag">Goal: ${goalShort[p.goal]}</span></div><h3>${r.headline}</h3><p>${r.why}</p><div class="recgrid"><div class="recitem"><div class="k">Recommended approach</div><div class="v">${escapeHtml(val('rewardType')||r.approach)}</div></div><div class="recitem"><div class="k">Primary metric</div><div class="v">${goalMetric[p.goal]}</div></div><div class="recitem"><div class="k">Suggested audience</div><div class="v">${escapeHtml(val('target')||'Eligible checkout customers')}</div></div><div class="recitem"><div class="k">Key guardrail</div><div class="v">${escapeHtml(r.risk)}</div></div></div><div class="divider"></div><div class="subheading">AI-generated strategy</div><div id="aiStrategy" class="notice">${previousAI||'<strong>Ready to generate.</strong> When you build your strategy, Gemini will tailor a recommendation using these merchant details and the illustrative insights. Nothing is activated automatically.'}</div>`;
+}
+async function generateAIStrategy(){
+ const p=state.profile||profile(),r=state.rec||buildInsights(p);
+ const box=$('aiStrategy');
+ if(!box) return;
+ box.innerHTML='<strong>Generating recommendation…</strong><p style="margin:8px 0 0">Contacting Gemini. This can take a little time.</p>';
+ const goalText=goalNames[p.goal];
+ const insightSummary={
+   dataType:'Synthetic and illustrative prototype insights; not real Razorpay data',
+   cohortRationale:`${industryName(p)}; ${categoryName(p)}; typical order value ${moneyBand(p)}; customer mix ${p.customerMix}`,
+   suggestedPattern:r.headline,
+   rationale:r.why,
+   illustrativeScores:r.bars,
+   caveat:'Scores are fictional examples and do not establish causal impact.'
+ };
+ try{
+   const response=await fetch('/api/strategy',{
+     method:'POST',
+     headers:{'Content-Type':'application/json'},
+     body:JSON.stringify({
+       merchantName:p.name,
+       industry:industryName(p),
+       productCategory:categoryName(p),
+       averageOrderValue:moneyBand(p),
+       grossMargin:p.margin==='low'?'Low margin band':p.margin==='high'?'High margin band':'Medium margin band',
+       customerMix:p.customerMix==='new'?'Mostly first-time customers':p.customerMix==='repeat'?'Mostly returning customers':'Mixed customer base',
+       goal:goalText,
+       syntheticInsights:insightSummary,
+       merchantConstraints:`Proposed approach: ${val('rewardType')}. Target audience: ${val('target')}. Suggested basket threshold: ₹${val('threshold')||'not specified'}. Test duration: ${val('duration')}. Merchant notes: ${val('merchantNotes').trim()||'None supplied'}. Preserve gross margin, monitor checkout conversion, use a control group where feasible, and keep all actions subject to merchant review and approval.`
+     })
+   });
+   const data=await response.json();
+   if(!response.ok) throw new Error(data.details||data.error||`Request failed (${response.status})`);
+   box.innerHTML=`<div class="statusline"><span class="tag blue">Live Gemini response</span><span class="tag">Merchant approval required</span></div><div class="ai-prose" style="line-height:1.65;margin-top:10px">${formatStrategyMarkdown(data.strategy||'No strategy text was returned.')}</div><p class="small" style="margin-top:12px"><strong>Data notice:</strong> ${escapeHtml(data.dataNotice||'Cohort insights are synthetic and illustrative.') } ${escapeHtml(data.activationStatus||'No live reward activated.')}</p><button class="btn" type="button" id="regenerateAI">Regenerate with my latest edits</button><p class="small">If you change the implementation fields or notes above, regenerate so Gemini can consider those changes before approval.</p>`; const regenerate=$('regenerateAI');if(regenerate)regenerate.addEventListener('click',generateAIStrategy);
+ }catch(error){
+   console.error('AI strategy request failed:',error);
+   box.innerHTML=`<strong>Live AI is temporarily unavailable.</strong><p style="margin:8px 0">${escapeHtml(error.message||'The request could not be completed.')}</p><p class="small">You can still review the controlled prototype recommendation above. No reward has been activated. Check that the local backend is running at localhost:3000, then try again.</p><button class="btn" type="button" id="retryAI">Retry AI recommendation</button>`;
+   const retry=$('retryAI');if(retry)retry.addEventListener('click',generateAIStrategy);
+ }
+}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function formatStrategyMarkdown(text){
+ const escaped=escapeHtml(text);
+ return escaped.split(/\n{2,}/).map(block=>{
+  let value=block.trim().replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
+  if(/^###\s+/.test(value)) return `<h4>${value.replace(/^###\s+/, '')}</h4>`;
+  if(/^\*\s+/.test(value)) return `<ul>${value.split('\n').map(line=>line.trim()).filter(Boolean).map(line=>`<li>${line.replace(/^\*\s+/, '')}</li>`).join('')}</ul>`;
+  value=value.replace(/\n/g,'<br>');
+  return `<p>${value}</p>`;
+ }).join('');
+}
+function captureApprovedPlan(){
+ const p=state.profile||profile();
+ return {
+  merchantName:p.name, goal:p.goal, goalLabel:goalShort[p.goal], orderValueBand:p.orderValue,
+  marginBand:p.margin, target:val('target'), rewardType:val('rewardType'),
+  threshold:val('threshold')===''?null:Number(val('threshold')), duration:val('duration'),
+  merchantNotes:val('merchantNotes').trim(), approvedAt:new Date().toISOString()
+ };
+}
+function renderResults(){
+ const p=state.profile||profile(),r=state.rec||buildInsights(p);state.profile=p;state.rec=r;
+ if(state.rejected){
+  $('resultsBody').innerHTML=`<div class="empty"><div class="symbol">↩</div><h3>Recommendation rejected</h3><p>You stayed in control. This prototype records the decision but does not train a model from one rejection.</p><button class="btn primary" data-goto="strategy">Review another strategy</button></div>`;
+  $('learningText').innerHTML='<strong>Learning signal:</strong> The merchant rejected the recommendation. A production system should ask why (for example, reward unavailable, margin concerns, or poor fit) before adapting future recommendations. This prototype does not train a model from one rejection.';
+  return;
+ }
+ const plan=state.approvedPlan||captureApprovedPlan();
+ const bandMidpoint={low:650,mid:3000,high:12500,premium:30000};
+ const baselineAov=bandMidpoint[p.orderValue]||3000;
+ // Transparent illustrative assumptions: a basket threshold only models a modest AOV lift if it is above the typical basket proxy.
+ const threshold=Number(plan.threshold||0);
+ const thresholdCanStretch=plan.rewardType==='Reward tied to a basket threshold'&&threshold>baselineAov;
+ const aovLift=p.goal==='aov'?(thresholdCanStretch?0.05:0.01):0;
+ const testAov=baselineAov*(1+aovLift);
+ const marginRate=p.margin==='low'?0.12:p.margin==='high'?0.40:0.25;
+ const rewardCostByType={'Relevant partner reward':18,'Reward tied to a basket threshold':25,'Post-purchase reward':18,'Limited-time checkout incentive':35};
+ const rewardCost=rewardCostByType[plan.rewardType]||18;
+ const baselineConversion=2.8;
+ // A deliberately cautious synthetic downside scenario. The same values are used everywhere the metric appears.
+ const conversionDelta=plan.rewardType==='Relevant partner reward'?-0.1:plan.rewardType==='Limited-time checkout incentive'?-0.2:-0.1;
+ const testConversion=baselineConversion+conversionDelta;
+ const baselineContribution=baselineAov*marginRate;
+ const testContribution=testAov*marginRate-rewardCost;
+ const contributionChange=(testContribution-baselineContribution)/baselineContribution*100;
+ const aovChange=(testAov-baselineAov)/baselineAov*100;
+ const fmtPct=n=>`${n>=0?'+':''}${n.toFixed(1)}%`;
+ const money=n=>'₹'+Math.round(n).toLocaleString('en-IN');
+ const primaryBefore=p.goal==='aov'?money(baselineAov):p.goal==='conversion'?'2.8%':'12.0%';
+ const primaryAfter=p.goal==='aov'?money(testAov):p.goal==='conversion'?`${testConversion.toFixed(1)}%`:'12.0%';
+ const primaryChange=p.goal==='aov'?fmtPct(aovChange)+' illustrative change':p.goal==='conversion'?`${conversionDelta>=0?'+':''}${conversionDelta.toFixed(1)} percentage points · illustrative`: 'Illustrative outcome; no repeat-purchase lift assumed';
+ const contributionNote=`${money(baselineAov)} × ${(marginRate*100).toFixed(0)}% baseline margin; test uses ${money(testAov)} × ${(marginRate*100).toFixed(0)}% minus ${money(rewardCost)} reward cost.`;
+ const tradeoff=p.goal==='conversion'?'The illustrative conversion outcome is negative, so this scenario does not achieve the selected goal. Treat it as a warning to simplify or change the offer—not as evidence that rewards reduce conversion.':'The illustrative result shows the trade-off between order value, checkout completion and reward cost. Do not scale based on one metric alone; validate incremental contribution and conversion against a control group.';
+ $('resultsBody').innerHTML=`<div class="notice" style="margin-bottom:17px"><strong>Simulation only.</strong> These are illustrative assumptions, not observed transactions or a forecast. Typical order value is represented by a band midpoint; the selected reward type determines an assumed reward cost. A basket-threshold lift is modelled only when the threshold exceeds that midpoint. Actual results require a controlled experiment.</div><div class="grid3"><div class="metric"><div class="label">Primary metric · ${goalMetric[p.goal]}</div><div class="value" style="font-size:16px">${primaryBefore} → ${primaryAfter}</div><div class="note">${primaryChange}</div></div><div class="metric"><div class="label">Checkout conversion</div><div class="value">${baselineConversion.toFixed(1)}% → ${testConversion.toFixed(1)}%</div><div class="note">Illustrative change: ${conversionDelta.toFixed(1)} percentage points</div></div><div class="metric"><div class="label">Assumed reward cost per order</div><div class="value">${money(rewardCost)}</div><div class="note">Illustrative assumption by reward type</div></div></div><div class="grid2" style="margin-top:12px"><div class="metric"><div class="label">Estimated contribution per order after reward</div><div class="value">${money(testContribution)}</div><div class="note">${contributionNote}</div></div><div class="metric"><div class="label">Contribution change vs baseline</div><div class="value">${fmtPct(contributionChange)}</div><div class="note">Per-order contribution only; does not include total orders or conversion effects.</div></div></div><div class="divider"></div><div class="insight-card"><span class="tag amber">Interpret with caution</span><h3>${p.goal==='conversion'?'The illustrative scenario misses the conversion goal':'Higher value per order does not guarantee better overall performance'}</h3><p>${tradeoff}</p></div><div class="subheading">Approved experiment setup</div><div class="grid2"><div class="metric"><div class="label">Reward approach</div><div class="value" style="font-size:14px">${escapeHtml(plan.rewardType)}</div><div class="note">Target: ${escapeHtml(plan.target)} · Duration: ${escapeHtml(plan.duration)}</div><div class="note">Basket threshold: ${plan.threshold===null?'Not set':money(plan.threshold)}</div></div><div class="metric"><div class="label">Merchant decision</div><div class="value" style="font-size:14px">Approved test plan</div><div class="note">Approval is simulated; no live reward was activated.</div></div></div>${plan.merchantNotes?`<div class="notice" style="margin-top:12px"><strong>Merchant constraints captured:</strong> ${escapeHtml(plan.merchantNotes)}</div>`:''}<div class="notice" style="margin-top:12px"><strong>Assumptions used:</strong> order-value midpoint ${money(baselineAov)}; margin midpoint ${(marginRate*100).toFixed(0)}%; reward cost ${money(rewardCost)} per order; conversion baseline ${baselineConversion.toFixed(1)}%. These are transparent demo assumptions, not Gemini-measured results.</div>`;
+ $('learningText').innerHTML=`<strong>What the system should learn:</strong> For ${escapeHtml(p.name)}, the simulation is a hypothesis check, not evidence. ${p.goal==='conversion'?'The illustrative conversion result is below baseline, so the next step should be to revise the reward or checkout presentation before testing again.':'Compare the primary metric with conversion and contribution before continuing.'} A production system would use actual experiment data, sample size and uncertainty to recommend continue, change or stop.`;
+}
+$('toInsights').addEventListener('click',()=>{if(!validateSetup())return;state.profile=profile();state.goal=state.profile.goal;state.completed.add('setup');refreshInsights();go('insights')});
+$('toStrategy').addEventListener('click',()=>{state.completed.add('insights');renderRecommendation();go('strategy');generateAIStrategy()});
+$('approveStrategy').addEventListener('click',()=>{
+ const guards=['guardMargin','guardEligibility','guardBaseline','guardPrivacy'];
+ const missing=guards.filter(id=>!$(id).checked);
+ if(missing.length){toast('Please review all four guardrails before approving.');return}
+ state.approved=true;state.rejected=false;state.approvedPlan=captureApprovedPlan();state.completed.add('strategy');state.completed.add('decision');renderResults();go('results');toast('Test plan approved in prototype. No live reward was activated.');
+});
+$('rejectStrategy').addEventListener('click',()=>{state.rejected=true;state.approved=false;state.approvedPlan=null;state.completed.add('strategy');state.completed.add('decision');renderResults();go('results');toast('Recommendation rejected. Merchant remains in control.')});
+$('newExperiment').addEventListener('click',()=>{state.rejected=false;state.approved=false;state.approvedPlan=null;state.profile=null;state.rec=null;state.goal=null;state.businessName='';state.completed.clear();$('businessName').value='';['industry','category','orderValue','margin','customerMix'].forEach(id=>$(id).selectedIndex=0);document.querySelectorAll('input[name="goal"]').forEach(el=>el.checked=false);$('target').selectedIndex=0;$('rewardType').selectedIndex=0;$('threshold').value='';$('duration').value='14 days';$('merchantNotes').value='';['guardMargin','guardEligibility','guardBaseline','guardPrivacy'].forEach(id=>$(id).checked=true);$('recommendation').innerHTML='';$('resultsBody').innerHTML='';$('learningText').innerHTML='';go('setup');toast('New experiment started with a clean form.')});
+document.querySelectorAll('[data-goto]').forEach(el=>el.addEventListener('click',()=>{const target=el.dataset.goto;if(!canVisit(target)){toast('Complete the previous step before opening this page.');return;}if(target==='insights'&&state.completed.has('setup'))refreshInsights();if(target==='strategy'&&state.completed.has('insights')){renderRecommendation();generateAIStrategy()}if(target==='results'&&state.completed.has('decision'))renderResults();go(target)}));
+document.querySelectorAll('input[name="goal"]').forEach(el=>el.addEventListener('change',()=>{state.goal=el.value}));
+['target','rewardType','threshold','duration','merchantNotes'].forEach(id=>$(id).addEventListener('input',()=>{if(state.profile)renderRecommendation();if(state.approved){state.approved=false;state.approvedPlan=null;state.completed.delete('decision');state.completed.delete('results');updateNavigation()}}));
+$('rewardType').addEventListener('change',()=>{if(val('rewardType')!=='Reward tied to a basket threshold')$('threshold').value='';else if(!$('threshold').value){const p=state.profile||profile();$('threshold').value=p.orderValue==='low'?750:p.orderValue==='mid'?1500:p.orderValue==='high'?7000:25000;}});
+['industry','category','orderValue','margin','customerMix','businessName'].forEach(id=>$(id).addEventListener('change',()=>{state.completed.delete('setup');state.completed.delete('insights');state.completed.delete('strategy');state.completed.delete('decision');updateNavigation();if(state.screen!=='setup'&&validateSetup()){state.completed.add('setup');refreshInsights();updateNavigation()}}));
+document.querySelectorAll('input[name="goal"]').forEach(el=>el.addEventListener('change',()=>{state.completed.delete('setup');state.completed.delete('insights');state.completed.delete('strategy');state.completed.delete('decision');updateNavigation()}));
+updateNavigation();
+</script>
+</body>
+</html>
