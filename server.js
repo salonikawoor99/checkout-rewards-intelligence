@@ -141,7 +141,7 @@ app.post("/api/strategy", async (req, res) => {
     "Be specific, cautious, and commercially practical.",
   ].join("\n");
 
-  const model = process.env.GEMINI_MODEL || "gemini-3.8-flash";
+  const model = process.env.GEMINI_MODEL || "gemini-3.7-flash";
 
   try {
     const ai = new GoogleGenAI({
